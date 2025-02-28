@@ -1,7 +1,12 @@
 {
-  "name": "-",
+  "name": "gen-ai-commit-message",
   "module": "src/index.ts",
+  "version": "0.1.0",
   "type": "module",
+  "bin": "dist/index.js",
+  "scripts": {
+    "build": " bun build --target=bun --format=esm --minify --bin src/index.ts --outdir dist"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

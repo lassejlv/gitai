@@ -1,0 +1,16 @@
+{
+  "name": "-",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^1.1.17",
+    "ai": "^4.1.46",
+    "consola": "^3.4.0"
+  }
+}

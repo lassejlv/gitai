@@ -10,7 +10,7 @@ switch (command) {
   }
 
   default: {
-    consola.error(`Unknown command: ${command}`)
+    consola.error(`Unknown command at ${command}`)
     break
   }
 }

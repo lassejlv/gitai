@@ -11,6 +11,7 @@
   "dependencies": {
     "@ai-sdk/google": "^1.1.17",
     "ai": "^4.1.46",
+    "clipboardy": "^4.0.0",
     "consola": "^3.4.0"
   }
 }

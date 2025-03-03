@@ -5,7 +5,7 @@
 	"type": "module",
 	"bin": "dist/index.js",
 	"scripts": {
-		"build": " bun build --target=bun --format=esm --minify --bin src/index.ts --outdir dist"
+		"build": " bun build --target=bun --format=esm --minify src/index.ts --outdir dist"
 	},
 	"devDependencies": {
 		"@types/bun": "latest"

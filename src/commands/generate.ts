@@ -44,7 +44,19 @@ export const GenerateCommand = async () => {
 	const spinner = ora('Generating commit message...').start()
 	await Bun.write(`tmp/git_changes-${id}.txt`, all_changes)
 	const commit_message = await generateCommitMessage(`tmp/git_changes-${id}.txt`)
-	await clipboardy.write(commit_message)
+
+	let cmd = ''
+
+	const fullGitCommand = process.argv.includes('--full')
+
+	if (fullGitCommand) {
+		cmd = `git commit -m "${commit_message}"`
+	} else {
+		cmd = commit_message
+	}
+
+	await clipboardy.write(cmd)
+
 	await $`rm -rf tmp`
-	spinner.succeed('Generated! + copied to clipboard')
+	spinner.succeed(`Generated! + copied to clipboard ${fullGitCommand && '(with git command)'}`)
 }

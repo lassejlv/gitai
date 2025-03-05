@@ -1,7 +1,13 @@
 import consola from 'consola'
 import { GenerateCommand } from './commands/generate'
+import { HelpCommand } from './commands/help'
 
 const command = process.argv[2]
+
+if (!command) {
+	HelpCommand()
+	process.exit(0)
+}
 
 switch (command) {
 	case 'generate': {
@@ -18,7 +24,7 @@ switch (command) {
 	}
 
 	case 'help': {
-		consola.info('Usage: gen-ai-commit-message <command>\n\nCommands:\n  generate\n  help')
+		HelpCommand()
 		break
 	}
 

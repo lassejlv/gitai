@@ -3,7 +3,7 @@ import { generateCommitMessage } from '../lib/ai'
 import clipboardy from 'clipboardy'
 import ora from 'ora'
 
-let all_changes: string = ''
+let all_changes = ''
 
 export const GenerateCommand = async () => {
 	const git_status = await $`git status -s --untracked-files=no`.quiet()

@@ -1,23 +1,26 @@
 {
-	"name": "gen-ai-commit-message",
-	"module": "src/index.ts",
-	"version": "0.1.3",
-	"type": "module",
-	"bin": "dist/index.js",
-	"scripts": {
-		"build": " bun build --target=bun --format=esm --minify src/index.ts --outdir dist"
-	},
-	"devDependencies": {
-		"@types/bun": "latest"
-	},
-	"peerDependencies": {
-		"typescript": "^5"
-	},
-	"dependencies": {
-		"@ai-sdk/google": "^1.1.17",
-		"ai": "^4.1.46",
-		"clipboardy": "^4.0.0",
-		"consola": "^3.4.0",
-		"ora": "^8.2.0"
-	}
+  "name": "gen-ai-commit-message",
+  "module": "src/index.ts",
+  "version": "0.1.4-updated",
+  "type": "module",
+  "bin": {
+    "gen-ai-commit-message": "./dist/index.js",
+    "gitai": "./dist/index.js"
+  },
+  "scripts": {
+    "build": " bun build --target=bun --format=esm --minify src/index.ts --outdir dist"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^1.1.17",
+    "ai": "^4.1.46",
+    "clipboardy": "^4.0.0",
+    "consola": "^3.4.0",
+    "ora": "^8.2.0"
+  }
 }

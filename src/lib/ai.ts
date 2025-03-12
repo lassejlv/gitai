@@ -37,3 +37,37 @@ export const generateCommitMessage = async (git_changes_path: string) => {
 
   return text;
 };
+
+export const SummarizeChanges = async (git_changes_path: string) => {
+  const absolutePath = resolve(git_changes_path);
+  // Read file content
+  const fileContent = await Bun.file(absolutePath).text();
+
+  // Create a base64-encoded data URL
+  const base64Content = Buffer.from(fileContent).toString("base64");
+  const dataUrl = `data:text/plain;base64,${base64Content}`;
+
+  const { text } = await generateText({
+    model: google("gemini-2.0-flash-001"),
+    messages: [
+      {
+        role: "system",
+        content:
+          "your job is to summarize the users changes from the file provdided. Only output something about the file. Do it like <file_name>: <short_message>; etc; Everything should be in one line.",
+      },
+      {
+        role: "user",
+        content: "These are my changes",
+        experimental_attachments: [
+          {
+            name: "git_changes",
+            contentType: "text/plain",
+            url: dataUrl,
+          },
+        ],
+      },
+    ],
+  });
+
+  return text;
+};

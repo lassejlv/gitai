@@ -2,6 +2,7 @@ import { $ } from 'bun'
 import { generateCommitMessage } from '../lib/ai'
 import clipboardy from 'clipboardy'
 import ora from 'ora'
+import consola from 'consola'
 
 let all_changes = ''
 
@@ -65,13 +66,18 @@ export const GenerateCommand = async () => {
 
   const wichFiles = prompt('\nWhat files you want to push? ')
 
+  if (!wichFiles) return consola.error('No files selected')
+
   const currentBranch = (await $`git branch --show-current`.quiet()).stdout.toString().trim()
 
+  const pushing = ora('Pushing to github...').start()
+
   if (wichFiles === '.') {
-    await $`git add . && git commit -m "${commit_message}" && git push origin ${currentBranch}`
+    await $`git add . && git commit -m "${commit_message}" && git push origin ${currentBranch}`.quiet()
   } else {
-    await $`git add ${wichFiles} && git commit -m "${commit_message}" && git push origin ${currentBranch}`
+    await $`git add ${wichFiles} && git commit -m "${commit_message}" && git push origin ${currentBranch}`.quiet()
   }
 
+  pushing.succeed('Pushed!')
   process.exit(0)
 }

@@ -1,7 +1,7 @@
 {
   "name": "gen-ai-commit-message",
   "module": "src/index.ts",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "type": "module",
   "bin": {
     "gen-ai-commit-message": "./dist/index.js",

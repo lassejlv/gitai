@@ -3,6 +3,9 @@ import { generateCommitMessage } from '../lib/ai'
 import clipboardy from 'clipboardy'
 import ora from 'ora'
 import consola from 'consola'
+import os from 'os'
+import fs from "fs"
+import { resolve } from 'path'
 
 let all_changes = ''
 
@@ -54,14 +57,23 @@ export const GenerateCommand = async () => {
     spinner = ora('Generating commit message...').start()
   }
 
-  await Bun.write(`tmp/git_changes-${id}.txt`, all_changes)
-
   if (stream) {
     console.log('Generating commit message...')
     console.log('----------------------------')
   }
 
-  const commit_message = await generateCommitMessage(`tmp/git_changes-${id}.txt`, stream)
+  const file_name = `tmp/git_changes-${id}.txt`
+  const homedir = os.homedir() + '/.gitai'
+  const full_path = homedir + '/' + file_name
+
+  await Bun.write(`${resolve(full_path)}`, all_changes)
+
+
+  if (!fs.existsSync(homedir)) {
+    fs.mkdirSync(homedir)
+  }
+
+  const commit_message = await generateCommitMessage(resolve(full_path), stream)
 
   let cmd = ''
 
@@ -81,7 +93,7 @@ export const GenerateCommand = async () => {
 
   await clipboardy.write(cmd)
 
-  await $`rm -rf tmp`
+  await $`rm -rf ${resolve(full_path)}`.quiet()
 
   if (!stream && spinner) {
     spinner.succeed(`Generated! + copied to clipboard ${fullGitCommand ? '(with git command)' : 'false'}`)

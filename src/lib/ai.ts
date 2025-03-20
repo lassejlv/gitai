@@ -14,7 +14,7 @@ export const generateCommitMessage = async (git_changes_path: string) => {
   const dataUrl = `data:text/plain;base64,${base64Content}`
 
   const { text } = await generateText({
-    model: google('gemini-2.0-flash-001'),
+    model: google('gemini-2.0-pro-exp-02-05'),
     messages: [
       {
         role: 'system',

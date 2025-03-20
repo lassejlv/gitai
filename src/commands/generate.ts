@@ -51,6 +51,11 @@ export const GenerateCommand = async () => {
   const fullGitCommand = process.argv.includes('--full')
   const pushToGithub = process.argv.includes('--push')
 
+  if (fullGitCommand && pushToGithub) {
+    consola.error('You can not use --full and --push at the same time')
+    process.exit(1)
+  }
+
   if (fullGitCommand) {
     cmd = `git commit -m "${commit_message}"`
   } else {

@@ -9,6 +9,11 @@ let all_changes = ''
 export const GenerateCommand = async () => {
   const git_status = await $`git status -s --untracked-files=no`.quiet()
 
+  if (git_status.exitCode !== 0) {
+    consola.error('No changes found')
+    process.exit(1)
+  }
+
   const files_changed = git_status.stdout
     .toString()
     .split('\n')
@@ -42,9 +47,21 @@ export const GenerateCommand = async () => {
 
   const id = Bun.randomUUIDv7()
 
-  const spinner = ora('Generating commit message...').start()
+  const stream = process.argv.includes('--stream')
+
+  let spinner
+  if (!stream) {
+    spinner = ora('Generating commit message...').start()
+  }
+
   await Bun.write(`tmp/git_changes-${id}.txt`, all_changes)
-  const commit_message = await generateCommitMessage(`tmp/git_changes-${id}.txt`)
+
+  if (stream) {
+    console.log('Generating commit message...')
+    console.log('----------------------------')
+  }
+
+  const commit_message = await generateCommitMessage(`tmp/git_changes-${id}.txt`, stream)
 
   let cmd = ''
 
@@ -65,7 +82,13 @@ export const GenerateCommand = async () => {
   await clipboardy.write(cmd)
 
   await $`rm -rf tmp`
-  spinner.succeed(`Generated! + copied to clipboard ${fullGitCommand && '(with git command)'}`)
+
+  if (!stream && spinner) {
+    spinner.succeed(`Generated! + copied to clipboard ${fullGitCommand ? '(with git command)' : 'false'}`)
+  } else {
+    console.log('----------------------------')
+    console.log(`Generated! + copied to clipboard ${fullGitCommand ? '(with git command)' : 'false'}`)
+  }
 
   if (!pushToGithub) process.exit(0)
 

@@ -41,17 +41,17 @@ export const generateCommitMessage = async (git_changes_path: string, stream: bo
     console.log()
 
     const { textStream } = streamText({
-      model: google('gemini-2.0-pro-exp-02-05'),
+      model: google('gemini-2.0-flash-001'),
       messages,
     })
 
     for await (const textPart of textStream) {
-      console.log(textPart + '\n' || '')
+      console.log(textPart)
       full_output += textPart
     }
   } else {
     const { text } = await generateText({
-      model: google('gemini-2.0-pro-exp-02-05'),
+      model: google('gemini-2.0-flash-001'),
       messages,
     })
 

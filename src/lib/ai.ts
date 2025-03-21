@@ -13,6 +13,7 @@ export const generateCommitMessage = async (git_changes_path: string, stream: bo
   // Create a base64-encoded data URL
   const base64Content = Buffer.from(fileContent).toString('base64')
   const dataUrl = `data:text/plain;base64,${base64Content}`
+  const model = process.env.GOOGLE_MODEL || "gemini-2.0-flash-001"
 
   const messages: any[] = [
     {
@@ -41,7 +42,7 @@ export const generateCommitMessage = async (git_changes_path: string, stream: bo
     console.log()
 
     const { textStream } = streamText({
-      model: google('gemini-2.0-flash-001'),
+      model: google(model),
       messages,
     })
 
@@ -51,7 +52,7 @@ export const generateCommitMessage = async (git_changes_path: string, stream: bo
     }
   } else {
     const { text } = await generateText({
-      model: google('gemini-2.0-flash-001'),
+      model: google(model),
       messages,
     })
 

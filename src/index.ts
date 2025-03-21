@@ -8,7 +8,7 @@ const command = process.argv[2]
 function KeyIsMissing() {
   if (!Bun.env.GOOGLE_API_KEY) {
     consola.error('Missing GOOGLE_API_KEY')
-    consola.info("You can set your key in a .env file or use this cmd: export GOOGLE_API_KEY='YOUR_KEY'\n\nmore models will be supported soon")
+    consola.info("You can set your key in a .env file or use this cmd: export GOOGLE_API_KEY='YOUR_KEY'\n\nmore models will be supported soon\n\nIf you wanna change the default model. Set the GOOGLE_MODEL in your .env file")
     process.exit(1)
   }
 }

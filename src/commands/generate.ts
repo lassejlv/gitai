@@ -1,11 +1,11 @@
 import { $ } from 'bun'
 import { generateCommitMessage } from '../lib/ai'
+import { resolve } from 'path'
 import clipboardy from 'clipboardy'
 import ora from 'ora'
 import consola from 'consola'
 import os from 'os'
 import fs from "fs"
-import { resolve } from 'path'
 
 let all_changes = ''
 
